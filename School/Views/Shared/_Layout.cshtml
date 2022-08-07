@@ -1,0 +1,130 @@
+﻿@using School.Models
+@{ 
+    var CourseStates = (List<CourseStates>) ViewBag.States;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <!-- Slick -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" integrity="sha512-wR4oNhLBHf7smjy0K4oqzdWumd+r5/+6QO/vDda76MW5iug4PT7v86FoEkySIJft3XA0Ae6axhIvHrqwm793Nw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" integrity="sha512-17EgCFERpgZKcm0j0fEq1YCJuyAWdz9KUtv1EjVuaOz8pDnh/0nZxmU6BBXwaaxqoi9PQXnRWqlcDB027hgv9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Slick -->
+
+    <!--BootStrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!--BootStrap Icons-->
+    <link href="~/Content/toastr.css" rel="stylesheet" />
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.css" />*@
+    @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">*@
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.10/sweetalert2.css" integrity="sha512-kUA+6aUE6xhYbRqzqHsWMnoc/rgcfAoqMh8dCYHTVUYHlLYlhFoNYm1qP08JTY69gN0LiwbtlYCT2bQ1mbqB4Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/css/jquery.dataTables.min.css" integrity="sha512-1k7mWiTNoyx2XtmI96o+hdjP8nn0f3Z2N4oF/9ZZRgijyV4omsKOXEnqL1gKQNPy2MTSP9rIEWGcH/CInulptA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .slick-next:before, .slick-prev:before{
+            color: #000 !important;
+        }
+        @@media(min-width:992px){
+            .dropdown-menu .dropdown-toggle:after{
+                border-top: .3em solid transparent;
+                border-right: 0;
+                border-bottom:.3em solid transparent;
+                border-left:.3em solid;
+            }
+            .dropdown-menu{
+                margin:0;
+            }
+            .megasubmenu{
+                left:100%;top:0;min-height: 100%;min-width: 500px;
+            }
+            .dropdown-menu > li:hover .megasubmenu{
+                display:block;
+            } 
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-1">
+
+            @if (CourseStates != null)
+            {
+                <ul class="list-group">
+                    @foreach (var item in CourseStates)
+                    {
+                        @Html.Partial("_States", item)
+                    }
+                </ul>
+            }
+
+</div>
+        <div class="col-md-11">
+            @Html.Partial("_NavBar")
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+                @*<footer class="text-info text-center">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>*@
+            </div>
+            @Html.Partial("_Footer")
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.5/datatables.min.js"></script>*@
+    @*<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>*@
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("input[type=datetime]").datepicker({
+                dateFormat: 'dd/mm/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-100:+100"
+            });
+            $('.fadee').slick({
+                dots: true,
+                infinite: true,
+                speed: 500,
+                autoplay: true,
+                fade: true,
+                cssEase: 'linear'
+            });
+            $("#MyTable").DataTable();
+
+            var tabs = $("#tabs").tabs();
+            tabs.find(".ui-tabs-nav").sortable({
+                axis: "x",
+                stop: function () {
+                    tabs.tabs("refresh");
+                }
+            });
+        });
+
+        $(document).on("click", ".dropdown-menu", function (e) {
+            e.stopPropagation();
+        });
+        if ($(window).width() < 992) {
+            $(".has-submenu a").click(function (e) {
+                e.preventDefault();
+                $(this).next(".megasubmenu").toggle();
+                $(".dropdown").on("hide.bs.dropdown", function () {
+                    $(this).find(".megasubmenu").hide();
+                })
+            })
+        }
+
+    </script>
+</body>
+</html>

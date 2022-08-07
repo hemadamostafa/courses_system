@@ -1,0 +1,16 @@
+﻿@using School.Models
+@{ 
+    var CourseStates = (List<CourseStates>) ViewBag.States;
+    var StudentStates = (List<StudentStates>)ViewBag.StdsTop;
+}
+
+@if(CourseStates != null && StudentStates != null)
+{
+    <h3>The Best Students</h3>
+    foreach (var item in StudentStates)
+    {
+        <a href="@Url.Action("Details", "Student",new { id=item.StudentId })">@item.FullName</a>
+    }
+}else{
+    <h3>No Data To view</h3>
+}

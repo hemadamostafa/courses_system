@@ -1,0 +1,45 @@
+﻿@model IEnumerable<School.Models.Carousel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SlideTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SubTitle)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@item.Image" style="height : 80px; width: 80px;"/>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SlideTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SubTitle)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SlideId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SlideId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SlideId })
+        </td>
+    </tr>
+}
+
+</table>

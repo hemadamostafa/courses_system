@@ -1,0 +1,121 @@
+﻿@model IEnumerable<School.Models.Course>
+
+@{
+    ViewBag.Title = "IndexMultiDelete";
+    @*var dels = new List<int>();*@
+}
+
+<h2>IndexMultiDelete</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("IndexMultiDelete", "Courses",FormMethod.Post)){
+    @*<button type="submit" value="delete" class="btn btn-danger"></button>*@
+    <button class="btn btn-danger disabled" onclick="return confirm('Are You Sure ?')" id="del-btn"><i class="bi bi-trash"></i></button>
+    <br>
+    <br>
+
+<table class="table">
+    <tr>
+        <th>
+            <input type="checkbox" id="parent" class="custom-check" />
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.credits)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <input type="checkbox" name="Id" value="@item.CourseId" class="custom-check child" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.credits)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CourseId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CourseId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CourseId })
+        </td>
+    </tr>
+}
+    
+</table>
+}
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var Selected = [];
+        $("#parent").click(function () {
+            Selected = [];
+            $(".child").prop("checked", this.checked);
+            if ($(".child").length > 0) {
+                $("#del-btn").removeClass("disabled");
+            } else {
+                $("#del-btn").addClass("disabled");
+            }
+            if ($(".child:checked").length > 0) {
+                $("#del-btn").removeClass("disabled");
+            } else {
+                $("#del-btn").addClass("disabled");
+            }
+            
+            for (var i = 0; i < $(".child:checked").length; i++) {
+                Selected.push($(".child:checked")[i].value)
+            }
+        })
+        $(".child").click(function () {
+            Selected = [];
+            if ($(".child:checked").length == $(".child").length) {
+                $("#parent").prop("checked", true);
+            } else {
+                $("#parent").prop("checked", false);
+            }
+            if ($(".child:checked").length > 0) {
+                $("#del-btn").removeClass("disabled");
+            } else {
+                $("#del-btn").addClass("disabled");
+            }
+            for (var i = 0; i < $(".child:checked").length; i++) {
+                Selected.push($(".child:checked")[i].value)
+            }
+        })
+    })
+    function multiDelete() {
+        var jsonText = JSON.stringify({ list: Selected });
+
+        swal({
+            title: "Are You Sure?",
+            text: "You Won't be able to revent this!",
+            icon: "warning"
+        }).then((result) => {
+            if (result) {
+                var url = "/Courses/IndexMultiDelete/";
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    data: jsonText, 
+                    contentType: "application/json; charset=utf-8",
+                    dataType:"json",
+                    success: function () {
+                        $(".child:checked").closest("tr").remove();
+                    },
+                    error: function () {
+                        toastr.error("Faild");
+                    }
+                });
+                toastr.success("Deleted!");
+            }
+        })
+    }
+</script>

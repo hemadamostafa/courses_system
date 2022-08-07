@@ -1,0 +1,98 @@
+﻿@model IEnumerable<School.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<script>
+
+</script>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@if (!Model.Any())
+{
+    <h3 class="text-warning lead">There is no data to show</h3>
+}
+else { 
+    <table id="MyTable" class="table">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="parent" class="btn-check" /></th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Level)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.credits)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th>Behavior</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.CourseLevel.LevelTitle)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.credits)
+                    </th>
+                    <th>
+                        @for (int i = 0; i < (int)item.Rating; i++)
+                        {
+                            <i class="bi bi-star-fill text-warning"></i>
+                        }
+                        @*@Html.DisplayFor(modelItem => item.Rating)*@
+                    </th>
+                    <th>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.CourseId })*@
+                        <a class="btn btn-danger" data-model-id="@item.CourseId" onclick="Delete(this)">Delete Ajax</a>
+                        <script>
+                            function Delete(element) {
+                                swal({
+                                    title: "Are You Sure?",
+                                    text:"You Won't be able to revent this!",
+                                    icon: "warning"
+                                }).then((result) => {
+                                    if (result) {
+                                        var ele = $(element);
+                                        var Id = ele.data("model-id");
+                                        var url = "/Courses/DeleteConfirmedJSON/" + Id;
+                                        $.ajax({
+                                            url: url,
+                                            type: "POST",
+                                            success: function () {
+                                                ele.closest("tr").remove();
+                                            },
+                                            error: function () {
+                                                toastr.error("Faild");
+                                            }
+                                        });
+                                        toastr.success("Deleted!");
+                                    }
+                                })
+                            }
+                        </script>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>

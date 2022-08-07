@@ -1,0 +1,39 @@
+﻿<style>
+    .ui-autocomplete{
+        z-index: 9999!important;
+    }
+</style>
+
+@using(Html.BeginForm("Index","Courses",FormMethod.Get,new { @class="d-flex"})){
+    @Html.AntiForgeryToken()
+    <input id="searchInput" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+}
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.13.1.min.js"></script>
+<script>
+    $(function () {
+        $("#searchInput").autocomplete({
+            minLength:2,
+            source: function (request, response) {
+                $.ajax({
+                    url:"@Url.Action("GetSrearch","Courses")",
+                    type:"POST",
+                dataType:"json",
+                data: { search: $("#searchInput").val() },
+                success:function(data){
+                    response($.map(data,function(item){
+                        response($.map(data, function (item) {
+                            return {label:item.Title,value:item.Title};
+                        }))
+                    }))
+                }
+            })
+
+            },
+            messages: {
+                noResults:"",results:""
+            }
+        })
+    })
+</script>

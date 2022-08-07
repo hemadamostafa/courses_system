@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fee6d04a9d7f48388f24c5a77c8d595d" Name="Diagram1" ZoomLevel="67" DisplayType="true" ShowGrid="false">
+        <EntityTypeShape EntityType="SchoolModel.Course" Width="2.375" PointX="2.625" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.Enrollment" Width="1.5" PointX="5.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SchoolModel.Student" Width="2.375" PointX="7.625" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="SchoolModel.FK__Enrollmen__Cours__276EDEB3" ManuallyRouted="false" />
+        <AssociationConnector Association="SchoolModel.FK__Enrollmen__Stude__286302EC" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SchoolModel.CourseLevel1" Width="1.875" PointX="0.5" PointY="1.75" />
+        <AssociationConnector Association="SchoolModel.FK__Course__Level2__6FE99F9F" />
+        <EntityTypeShape EntityType="SchoolModel.Carousel" Width="1.5" PointX="10.75" PointY="1.5" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
